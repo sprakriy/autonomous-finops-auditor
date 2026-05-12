@@ -2,11 +2,15 @@ import re
 import json
 import os
 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.abspath(os.path.join(script_dir, "../../"))
+decision_file = os.path.join(root_dir, "ai_decision.json")
+
 def run_remediation():
     # 1. Load the recommendation from the previous step
     # We assume your AI script saved its decision to this JSON file
     try:
-        with open('ai_decision.json', 'r') as f:
+        with open(decision_file, 'r') as f:
             decision = json.load(f)
         new_type = decision.get('recommendation')
     except FileNotFoundError:

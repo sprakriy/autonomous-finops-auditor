@@ -2,6 +2,12 @@ import boto3
 import json
 import subprocess
 
+# Get the directory where THIS script is (python/scripts/)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+# Move up to the root (autonomous-finops-auditor/)
+root_dir = os.path.abspath(os.path.join(script_dir, "../../"))
+decision_file = os.path.join(root_dir, "ai_decision.json")
+
 def get_tf_outputs():
     """Extracts instance IDs directly from Terraform"""
     try:
@@ -42,7 +48,7 @@ def main():
     }
 
     # Save to a local file so we can Destroy the AWS resources immediately
-    with open("ai_decision.json", "w") as f:
+    with open(decision_file, "w") as f:
         json.dump(evidence, f, indent=4)
     
     print("✅ Evidence captured to ai_decision.json.")
