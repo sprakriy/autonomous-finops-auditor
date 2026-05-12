@@ -1,0 +1,53 @@
+import boto3
+import json
+import subprocess
+
+def get_tf_outputs():
+    """Extracts instance IDs directly from Terraform"""
+    try:
+        output = subprocess.check_output(["terraform", "output", "-json"])
+        return json.loads(output)
+    except Exception as e:
+        print(f"Error reading TF output: {e}")
+        return None
+
+def main():
+    print("🚀 Starting Evidence Collection...")
+    tf_data = get_tf_outputs()
+    
+    if not tf_data:
+        print("❌ No Terraform outputs found. Is the infrastructure live?")
+        return
+
+    # Extract IDs from your root outputs
+    ec2_id = tf_data['ec2_instance_id']['value']
+    
+    # Create the Evidence Object
+    # We 'mock' the CPU to 0.8% to simulate waste without waiting 1 hour
+    evidence = {
+        "timestamp": datetime.now().isoformat(),
+        "resources": [
+            {
+                "resource_id": ec2_id,
+                "type": "m5.xlarge",
+                "cost_per_hr": 0.192,
+                "metrics": {
+                    "avg_cpu_utilization": "0.85%",
+                    "max_cpu_utilization": "2.1%",
+                    "status": "Underutilized"
+                },
+                "hcl_context": "terraform/modules/main.tf"
+            }
+        ]
+    }
+
+    # Save to a local file so we can Destroy the AWS resources immediately
+    with open("ai_decision.json", "w") as f:
+        json.dump(evidence, f, indent=4)
+    
+    print("✅ Evidence captured to ai_decision.json.")
+    print("⚠️  You can now run 'terraform destroy' to stop the billing.")
+
+if __name__ == "__main__":
+    from datetime import datetime
+    main()
