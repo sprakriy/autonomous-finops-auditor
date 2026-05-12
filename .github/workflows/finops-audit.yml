@@ -19,18 +19,18 @@ jobs:
         run: |
           pwd
           ls -R  # This will show the whole tree. Find where main.tf is!
-          
-      - name: Terraform Init
-        # This MUST be where your state is. If it's modular, go there.
-        run: terraform init --reconfigure
-        working-directory: terraform/modules # or terraform/modules if that's your root module
-
+      
       - name: Configure AWS via OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
           # Direct ARN usage to avoid 403 Secret-masking issues
           role-to-assume: arn:aws:iam::319310747432:role/GitHubActionsServiceRole
           aws-region: us-east-1
+    
+      - name: Terraform Init
+        # This MUST be where your state is. If it's modular, go there.
+        run: terraform init --reconfigure
+        working-directory: terraform/modules # or terraform/modules if that's your root module
 
       - name: Setup Python
         uses: actions/setup-python@v5
