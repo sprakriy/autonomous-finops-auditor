@@ -13,7 +13,14 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
 
+      - name: Terraform Init
+        # This MUST be where your state is. If it's modular, go there.
+        run: terraform init
+        working-directory: . # or terraform/modules if that's your root module
+        
       - name: Configure AWS via OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -36,7 +43,7 @@ jobs:
           echo "Current Directory: $(pwd)"
           echo "Searching for ai_decision.json..."
           ls -l ai_decision.json || echo "❌ FILE NOT FOUND IN ROOT"
-          
+
       - name: Apply Remediation to HCL
         run: |
           # This calls the "sed-like" function inside your script
