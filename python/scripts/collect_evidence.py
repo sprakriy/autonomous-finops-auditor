@@ -12,7 +12,11 @@ decision_file = os.path.join(root_dir, "ai_decision.json")
 def get_tf_outputs():
     """Extracts instance IDs directly from Terraform"""
     try:
-        output = subprocess.check_output(["terraform", "output", "-json"])
+        tf_dir = os.path.join(root_dir, "terraform", "modules")
+        output = subprocess.check_output(["terraform", "output", "-json"],
+                                         cwd=tf_dir,
+                                         text=True
+                                         )
         return json.loads(output)
     except Exception as e:
         print(f"Error reading TF output: {e}")
