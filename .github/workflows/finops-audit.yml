@@ -31,7 +31,12 @@ jobs:
           pip install boto3
           # Using the script we refined earlier
           python python/scripts/collect_evidence.py
-
+      - name: Verify Handover
+        run: |
+          echo "Current Directory: $(pwd)"
+          echo "Searching for ai_decision.json..."
+          ls -l ai_decision.json || echo "❌ FILE NOT FOUND IN ROOT"
+          
       - name: Apply Remediation to HCL
         run: |
           # This calls the "sed-like" function inside your script
