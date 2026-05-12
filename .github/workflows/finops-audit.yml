@@ -22,7 +22,7 @@ jobs:
           
       - name: Terraform Init
         # This MUST be where your state is. If it's modular, go there.
-        run: terraform init
+        run: terraform init --reconfigure
         #working-directory: terraform/modules # or terraform/modules if that's your root module
 
       - name: Configure AWS via OIDC
