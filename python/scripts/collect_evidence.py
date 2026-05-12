@@ -1,6 +1,7 @@
 import boto3
 import json
 import subprocess
+import os
 
 # Get the directory where THIS script is (python/scripts/)
 script_dir = os.path.dirname(os.path.abspath(__file__))
