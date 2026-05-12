@@ -15,7 +15,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
-
+      - name: Debug - Where am I and what is here?
+        run: |
+          pwd
+          ls -R  # This will show the whole tree. Find where main.tf is!
+          
       - name: Terraform Init
         # This MUST be where your state is. If it's modular, go there.
         run: terraform init
