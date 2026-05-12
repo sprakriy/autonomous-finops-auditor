@@ -1,0 +1,39 @@
+name: "FinOps AI Auditor"
+
+on:
+  workflow_dispatch: # Allows you to trigger it manually via the UI
+
+permissions:
+  id-token: write # MANDATORY for the OIDC handshake
+  contents: read  # Allows the runner to read your code
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          # Direct ARN usage to avoid 403 Secret-masking issues
+          role-to-assume: arn:aws:iam::319310747432:role/GitHubActionsServiceRole
+          aws-region: us-east-1
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run AI Remediation
+        run: |
+          pip install boto3
+          # Using the script we refined earlier
+          python python/scripts/ai_remediator.py
+
+      - name: Publish Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: finops-audit-report
+          path: remediation_report.md
