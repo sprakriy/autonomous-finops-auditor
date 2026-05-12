@@ -23,7 +23,15 @@ resource "aws_instance" "audit_target_ec2" {
   })
 }
 
+terraform {
+  backend "s3" {
+    bucket = "sp-01102026-aws-kub"
+    key    = "day5/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
 # Over-provisioned RDS: db.m5.large with high Provisioned IOPS
+/*
 resource "aws_db_instance" "audit_target_rds" {
   allocated_storage      = 100
   db_name                = "bloated_db"
@@ -41,3 +49,4 @@ resource "aws_db_instance" "audit_target_rds" {
 
   tags = local.common_tags
 }
+*/
