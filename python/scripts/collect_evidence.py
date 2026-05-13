@@ -2,7 +2,7 @@ import boto3
 import json
 import subprocess
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
 # Get the directory where THIS script is (python/scripts/)
 script_dir = os.path.dirname(os.path.abspath(__file__))
