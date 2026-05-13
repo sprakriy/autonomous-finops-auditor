@@ -25,7 +25,7 @@ def get_tf_outputs():
         tf_dir = os.path.join(root_dir, "terraform", "modules")
         print(f"DEBUG: Running terraform output in {tf_dir}")
         output = subprocess.check_output(["terraform", "output", "-json"],
-                                         cwd=tf_dir,
+                                         cwd=root_dir,
                                          text=True,
                                          stderr=subprocess.STDOUT
                                          )
