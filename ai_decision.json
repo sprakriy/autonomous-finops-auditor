@@ -1,0 +1,14 @@
+{
+    "timestamp": "2026-05-13T19:30:47.340867",
+    "recommendation": "m5.xlarge",
+    "resources": [
+        {
+            "resource_id": "i-0de1ab49b8445aea0",
+            "metrics": {
+                "avg_cpu_utilization": "0.85%",
+                "max_cpu_utilization": "2.1%",
+                "status": "Underutilized"
+            }
+        }
+    ]
+}
