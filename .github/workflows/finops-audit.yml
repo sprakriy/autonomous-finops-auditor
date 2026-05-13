@@ -57,6 +57,12 @@ jobs:
           # This calls the "sed-like" function inside your script
           python python/scripts/apply_fix.py
 
+      - name: Inspect AI Evidence
+        run: |
+          echo "==== START OF JSON ===="
+          cat ai_decision.json
+          echo -e "\n==== END OF JSON ===="    
+          
       - name: Check for Changes
         id: git-check
         run: |
