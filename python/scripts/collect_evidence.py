@@ -88,7 +88,7 @@ def get_actual_metrics(instance_id):
             Dimensions=[{'Name': 'InstanceId', 'Value': instance_id}],
             StartTime=start_time,
             EndTime=end_time,
-            Period=1800, # 30 minutes
+            Period=60, # 10 minutes
             Statistics=['Average', 'Maximum']
         )
 
