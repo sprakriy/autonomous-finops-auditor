@@ -2,6 +2,7 @@ import boto3
 import json
 import subprocess
 import os
+from datetime import datetime
 
 # Get the directory where THIS script is (python/scripts/)
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -13,13 +14,18 @@ def get_tf_outputs():
     """Extracts instance IDs directly from Terraform"""
     try:
         tf_dir = os.path.join(root_dir, "terraform", "modules")
+        print(f"DEBUG: Running terraform output in {tf_dir}")
         output = subprocess.check_output(["terraform", "output", "-json"],
                                          cwd=tf_dir,
-                                         text=True
+                                         text=True,
+                                         stderr=subprocess.STDOUT
                                          )
         return json.loads(output)
     except Exception as e:
         print(f"Error reading TF output: {e}")
+        return None
+    except Exception as e:
+        printf(f"X Unexpected Error{e}")
         return None
 
 def main():
