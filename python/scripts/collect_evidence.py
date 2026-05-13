@@ -8,6 +8,7 @@ from datetime import datetime
 script_dir = os.path.dirname(os.path.abspath(__file__))
 # Move up to the root (autonomous-finops-auditor/)
 root_dir = os.path.abspath(os.path.join(script_dir, "../../"))
+print(f" the root_dir is {root_dir}")
 decision_file = os.path.join(root_dir, "ai_decision.json")
 
 def get_tf_outputs():
