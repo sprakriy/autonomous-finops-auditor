@@ -29,6 +29,7 @@ def get_tf_outputs():
         print(f"DEBUG: Running terraform output in {tf_dir}")
         output = subprocess.check_output(["terraform", "output", "-json"],
                                          cwd=tf_dir,
+                                         env=os.environ,  # <--- CRITICAL: Passes AWS/Terraform context
                                          text=True,
                                          stderr=subprocess.STDOUT
                                          )
