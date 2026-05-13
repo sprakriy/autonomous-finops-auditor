@@ -6,9 +6,17 @@ from datetime import datetime
 
 # Get the directory where THIS script is (python/scripts/)
 script_dir = os.path.dirname(os.path.abspath(__file__))
-# Move up to the root (autonomous-finops-auditor/)
-root_dir = os.path.abspath(os.path.join(script_dir, "../../"))
-print(f" the root_dir is {root_dir}")
+current = script_dir
+while current != os.path.dirname(current):
+    if "terraform" in os.listdir(current):
+        root_dir = current
+        break
+    current = os.path.dirname(current)
+else:
+    # Fallback to current working directory if the loop fails
+    root_dir = os.getcwd()
+
+print(f"✅ Root Directory identified as: {root_dir}")
 decision_file = os.path.join(root_dir, "ai_decision.json")
 
 def get_tf_outputs():
