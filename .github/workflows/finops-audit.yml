@@ -63,27 +63,27 @@ jobs:
           cat ai_decision.json
           echo -e "\n==== END OF JSON ===="    
           
-      - name: Check for Changes
-        id: git-check
-        run: |
-          git status --porcelain
-          echo "changes=$(git status --porcelain | wc -l)" >> $GITHUB_OUTPUT
+#      - name: Check for Changes
+#        id: git-check
+#        run: |
+#          git status --porcelain
+#          echo "changes=$(git status --porcelain | wc -l)" >> $GITHUB_OUTPUT
 
-      - name: Commit and Push (The Actuator)
-        if: steps.git-check.outputs.changes != '0'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # 1. Extract the recommendation for a better commit message
-          RECOMMENDATION=$(python3 -c "import json; print(json.load(open('ai_decision.json'))['recommendation'])")
+#      - name: Commit and Push (The Actuator)
+#        if: steps.git-check.outputs.changes != '0'
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: |
+#          # 1. Extract the recommendation for a better commit message
+#          RECOMMENDATION=$(python3 -c "import json; print(json.load(open('ai_decision.json'))['recommendation'])")
           
           # 2. Configure Git
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+#          git config user.name "github-actions[bot]"
+#          git config user.email "github-actions[bot]@users.noreply.github.com"
           
           # 3. Create branch and push
-          BRANCH_NAME="finops/optimize-to-${RECOMMENDATION}-${{ github.run_number }}"
-          git checkout -b $BRANCH_NAME
-          git add .
-          git commit -m "FinOps: AI recommended resize to ${RECOMMENDATION}"
-          git push origin $BRANCH_NAME
+#          BRANCH_NAME="finops/optimize-to-${RECOMMENDATION}-${{ github.run_number }}"
+#          git checkout -b $BRANCH_NAME
+#          git add .
+#          git commit -m "FinOps: AI recommended resize to ${RECOMMENDATION}"
+#          git push origin $BRANCH_NAME
