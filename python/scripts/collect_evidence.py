@@ -34,6 +34,9 @@ def get_tf_outputs():
                                          stderr=subprocess.STDOUT
                                          )
         return json.loads(output)
+    except subprocess.CalledProcessError as e:
+        print(f"X Terraform Error {e.output}")
+        return None
     except Exception as e:
         print(f"Error reading TF output: {e}")
         return None
