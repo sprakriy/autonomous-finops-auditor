@@ -64,7 +64,7 @@ def get_ai_recommendation(instance_type, status):
         })
 
         response = bedrock.invoke_model(
-            modelId='anthropic.claude-3-haiku-20240307-v1:0',
+            modelId='global.anthropic.claude-sonnet-4-20250514-v1:0',
             body=body
         )
         
