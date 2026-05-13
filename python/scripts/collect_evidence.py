@@ -21,11 +21,14 @@ decision_file = os.path.join(root_dir, "ai_decision.json")
 
 def get_tf_outputs():
     """Extracts instance IDs directly from Terraform"""
+    # Use the env var from YAML, or default to the local path
+    tf_relative_path = os.getenv("TF_ACTION_WORKING_DIR", "terraform/modules")
+    tf_dir = os.path.abspath(os.path.join(root_dir, tf_relative_path))
     try:
         tf_dir = os.path.join(root_dir, "terraform", "modules")
         print(f"DEBUG: Running terraform output in {tf_dir}")
         output = subprocess.check_output(["terraform", "output", "-json"],
-                                         cwd=root_dir,
+                                         cwd=tf_dir,
                                          text=True,
                                          stderr=subprocess.STDOUT
                                          )
