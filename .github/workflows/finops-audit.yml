@@ -31,6 +31,10 @@ jobs:
         # This MUST be where your state is. If it's modular, go there.
         run: terraform init --reconfigure
         working-directory: terraform/modules # or terraform/modules if that's your root module
+      - name: Terraform Output
+        # This MUST be where your state is. If it's modular, go there.
+        run: terraform output -json
+        working-directory: terraform/modules # or terraform/modules if that's your root module
 
       - name: Setup Python
         uses: actions/setup-python@v5
